@@ -1,7 +1,7 @@
 class OrdersController < ApplicationController
     before_action :authenticate_user!, only: [:new, :create]
 
-    def index
+   def index
       @orders = current_user.customer.orders.order(created_at: :desc)
     end
     def new
