@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Prairie Crafts</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
+    <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
+    <%= javascript_importmap_tags %>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+  </head>
+  <style>
+  body {
+    background-color: #f4f7f6;
+    color: #333;
+    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  }
+  
+  /* Navbar and Forms */
+  .navbar {
+    background-color: #005f73; /* Dark blue shade */
+  }
+  
+  .form-control, .btn {
+    border-radius: 0.25rem;
+  }
+  
+  .btn-primary {
+    background-color: #0a9396;
+    border-color: #0a9396; /* Cyan shade */
+  }
+  
+  .btn-info {
+    background-color: #94d2bd; /* Light cyan */
+    border-color: #94d2bd;
+  }
+  
+  /* Product Cards */
+  .card {
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.1);
+    transition: 0.3s;
+    border: none;
+  }
+  
+  .card:hover {
+    box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
+  }
+  
+  .card-img-top {
+    width: 100%;
+    height: 15vw;
+    object-fit: cover;
+  }
+  
+  .card-body {
+    padding: 2rem;
+  }
+  
+  .card-title {
+    color: #005f73; /* Dark blue shade */
+  }
+  
+  .card-text {
+    color: #334e68; /* Dark gray-blue */
+  }
+  
+  .card-subtitle {
+    color: #5f0f40; /* Dark red shade */
+  }
+  
+  /* Alerts */
+  .alert-info {
+    background-color: 
+    color: 
+  }
+  
+  /* Footer Styling */
+  .card-footer {
+    background-color: #ffffff;
+    border-top: 1px solid #eeeeee;
+    padding: 0.75rem 1.25rem;
+  }
+  
+  /* Adjusting Link Colors */
+  a {
+    color: #005f73;
+  }
+  
+  a:hover {
+    color: #0a9396;
+  }
+  
+  /* Pagination */
+  .pagination {
+    justify-content: center; /* Center pagination */
+  }
+
+  /* Container and Spacing */
+.container {
+  max-width: 1200px; /* Or whatever max width you prefer */
+}
+
+.search-filter-section, .pagination-section {
+  padding: 1rem 0;
+}
+
+/* Search and Filter Row */
+.search-filter-section .row > div {
+  margin-bottom: 1rem; /* Ensures spacing on smaller screens */
+}
+
+/* Buttons */
+.btn {
+  margin: 0 5px; /* Small margin around buttons for separation */
+}
+
+/* Product Cards */
+.product-card {
+  /* Adjustments to make cards stand out more */
+  margin: 0.5rem;
+  border: 1px solid #dee2e6; /* Light grey border */
+  border-radius: 0.25rem; /* Slightly rounded corners for a softer look */
+}
+
+.card-body {
+  padding: 1.25rem;
+}
+
+.card-title {
+  font-size: 1.25rem; /* Slightly larger titles */
+  margin-bottom: 0.75rem;
+}
+
+.card-text {
+  font-size: 1rem; /* Ensures text is not too small */
+  margin-bottom: 1rem; /* More space between text and price or footer */
+}
+
+.card-img-top {
+  height: 200px; /* Fixed height for consistency */
+  object-fit: cover; /* Ensure images cover the area well */
+}
+
+/* Adjust text centering and padding for category and product headings */
+h2.text-center {
+  margin-bottom: 2rem; /* More space below headings */
+}
+
+.search-filter-section {
+  background-color: #f8f9fa; /* Light gray background for contrast */
+  padding: 2rem 0; /* Spacing above and below the search form */
+  border-bottom: 2px solid #e9ecef; /* Subtle bottom border for definition */
+}
+
+.search-form .form-row {
+  max-width: 800px; /* Limiting the form width for better visual structure */
+  margin: auto; /* Center the form in the page */
+}
+
+.form-control, .custom-select {
+  height: calc(2.25rem + 2px); /* Adjust input and select height for consistency */
+}
+
+.btn-primary {
+  padding: 0.5rem 1rem; /* Button padding for better touch target size */
+}
+
+.product-detail-card {
+  margin-top: 2rem;
+  background: #ffffff;
+  border-radius: 0.5rem;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.product-image {
+  width: 100%;
+  border-top-left-radius: calc(0.5rem - 1px); /* Align with card's border-radius */
+  border-top-right-radius: calc(0.5rem - 1px);
+}
+
+.product-name {
+  color: #005f73; /* Primary color for emphasis */
+  margin-bottom: 1rem;
+}
+
+.product-description, .product-category,.product-price {
+  font-size: 1rem;
+  margin-bottom: 0.5rem;
+}
+
+.add-to-cart-form .quantity-field {
+  margin-top: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.card-footer {
+  background: #f8f9fa;
+  border-top: 1px solid #e9ecef;
+}
+
+.btn-primary {
+  background-color: #0a9396; /* Adjusted primary button color */
+  border-color: #0a9396;
+}
+
+.btn-secondary {
+  color: #ffffff;
+  background-color: #94d2bd; /* Secondary button color for contrast */
+}
+/* Navbar Styling */
+.navbar {
+  background-color: #343a40; /* Deep, dark gray for a sophisticated look */
+}
+
+.navbar-brand {
+  font-weight: bold;
+  color: #f8f9fa !important; /* Ensures the brand name stands out */
+}
+
+.nav-link {
+  color: #adb5bd !important; /* Soft, light gray for contrast */
+  transition: color 0.3s ease-in-out; /* Smooth transition for hover effect */
+}
+
+.nav-link:hover {
+  color: #f8f9fa !important; /* Brightens links on hover for better interactivity */
+}
+
+/* Custom Button Styling for 'Sign Out' */
+.btn-dark {
+  background-color: #6c757d; 
+  border: none;
+  transition: background-color 0.3s ease-in-out; 
+}
+
+.btn-dark:hover {
+  background-color: #5a6268;
+}
+
+
+.form-inline {
+  display: inline-block; /* Allows the form to sit inline with navigation items */
+}
+
+.login-card {
+  border-radius: 1rem; /* Rounded corners for the card */
+  border: none; /* Remove default border */
+}
+
+.bg-gradient-primary {
+  background: linear-gradient(45deg, #007bff, #004085); /* Custom gradient */
+  color: #fff; /* White text color */
+}
+
+.btn-primary {
+  background-color: #007bff; /* Primary button color */
+  border: none; /* Remove default border */
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+}
+
+.btn-primary:hover {
+  background-color: #0056b3; /* Darker shade on hover */
+}
+
+.btn-secondary {
+  background-color: #6c757d; /* Secondary button color */
+  border: none; /* Remove default border */
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+}
+
+.btn-secondary:hover {
+  background-color: #5a6268; /* Darker shade on hover */
+}
+
+.form-control {
+  border: 2px solid #ced4da; /* Custom border for input fields */
+}
+
+.form-control:focus {
+  border-color: #80bdff; /* Highlight color on focus */
+  box-shadow: 0 0 0 0.2rem rgba(0,123,255,.25); /* Focus shadow */
+}
+
+.rounded-pill {
+  border-radius: 50rem !important; /* Make input fields and buttons rounded */
+}
+
+.form-label {
+  font-weight: 600; /* Make labels slightly bolder */
+}
+
+.text-primary {
+  color: #007bff; /* Ensure consistent primary color use */
+}
+
+.text-primary:hover {
+  color: #0056b3; /* Darker shade on hover for links */
+}
+
+.container {
+  max-width: 1200px;
+  margin: 2rem auto;
+  background-color: #ffffff;
+  padding: 2rem;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
+.section-title {
+  font-size: 1.5rem;
+  color: #0056b3;
+  margin-bottom: 1rem;
+}
+.form-control, .form-label {
+  margin-bottom: 1rem;
+}
+.total-price {
+  font-size: 1.2rem;
+  color: #28a745; /* Green for financial totals */
+  font-weight: bold;
+  margin-top: 1rem;
+  text-align: right;
+}
+.btn-primary {
+  background-color: #007bff;
+  border-color: #007bff;
+  padding: 0.5rem 1.5rem;
+  font-size: 1.1rem;
+  border-radius: 5px;
+}
+.alert-success {
+  color: #155724;
+  background-color: #d4edda;
+  border-color: #c3e6cb;
+  position: fixed;
+  top: 1rem;
+  right: 1rem;
+  border-radius: 5px;
+  padding: 0.75rem 1.25rem;
+  font-size: 1rem;
+}
+
+
+
+  
+  </style>
+  <body>
+  <%= render partial: 'layouts/nav' %>
+
+
+ 
+    <%= yield %>
+  </body>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js" integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  const provinceSelect = document.getElementById('province_select');
+
+  provinceSelect.addEventListener('change', function() {
+    const provinceId = this.value; 
+    fetch(`/provinces/${provinceId}/tax_rates`)
+      .then(response => response.json())
+      .then(taxRates => {
+        document.getElementById('gst').textContent = `GST: ${taxRates.gst}%`;
+        document.getElementById('pst').textContent = `PST: ${taxRates.pst}%`;
+        document.getElementById('hst').textContent = `HST: ${taxRates.hst}%`;
+
+        document.getElementById('hidden_gst').value = taxRates.gst;
+        document.getElementById('hidden_pst').value = taxRates.pst;
+        document.getElementById('hidden_hst').value = taxRates.hst;
+      })
+      .catch(error => console.error('Error fetching tax rates:', error));
+  });
+
+  if (provinceSelect.value) {
+    provinceSelect.dispatchEvent(new Event('change'));
+  }
+});
+</script>
+
+
+</html>

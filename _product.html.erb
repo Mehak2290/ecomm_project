@@ -1,0 +1,15 @@
+<div class="col-md-6 col-lg-4 mb-3">
+  <div class="card product-card h-100">
+    <% if product.image.attached? %>
+      <%= image_tag(product.image, class: 'card-img-top') %>
+    <% else %>
+      <img class="card-img-top" src="https://via.placeholder.com/300x300" alt="Placeholder">
+    <% end %>
+    <div class="card-body">
+      <h5 class="card-title"><%= product.name %></h5>
+      <p class="card-text"><%= product.description %></p>
+      <h6 class="card-subtitle mb-2 text-muted"><%= number_to_currency(product.price) %></h6>
+      <%= link_to 'View', product_path(product), class: 'btn btn-primary rounded-pill' %>
+    </div>
+  </div>
+</div>

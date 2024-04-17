@@ -1,0 +1,114 @@
+
+    <div class="container">
+        <h2 class="text-center mb-4">Invoice Details</h2>
+        <% if flash[:success] %>
+        <div class="alert alert-success" role="alert">
+            <%= flash[:success] %>
+        </div>
+       
+        <% end %>
+        
+        <%= form_for @order, html: { class: 'needs-validation', novalidate: "" } do |f| %>
+            <div class="section">
+                <h4 class="section-title">Shipping Details</h4>
+                <div class="form-group">
+                    <%= f.label :address, 'Shipping Address', class: 'form-label' %>
+                    <%= f.text_field :address, value: @order.address, class: 'form-control rounded-pill', placeholder: '1234 Main St', required: true %>
+                </div>
+                <div class="form-group">
+                    <%= f.label :province_id, 'Province', class: 'form-label' %>
+                    <%= f.collection_select :province_id, @provinces || [], :last, :first, { prompt: 'Select Province' }, { id: 'province_select', class: 'form-control rounded-pill', required: true } %>
+
+                </div>
+            </div>
+
+            <div class="section">
+                <h4 class="section-title">Invoice Details</h4>
+                <% total_price = 0 %>
+                <%= f.fields_for :order_items do |item_fields| %>
+                    <div class="form-group">
+                        <p class="form-label"><%= item_fields.object.product.name %>: <%= item_fields.object.quantity %> x <%= number_to_currency(item_fields.object.price) %></p>
+                        <% total_price += item_fields.object.quantity * item_fields.object.price %>
+                    </div>
+                <% end %>
+                <p id="gst">GST: <%= number_to_currency(@order.gst || 0) %></p>
+                <p id="pst">PST: <%= number_to_currency(@order.pst || 0) %></p>
+                <p id="hst">HST: <%= number_to_currency(@order.hst || 0) %></p>
+                <div class="total-price">
+                    Total Order Price: <%= number_to_currency(total_price + (@order.gst || 0) + (@order.pst || 0) + (@order.hst || 0)) %>
+                </div>
+            </div>
+
+            <div class="section">
+    <h4 class="section-title">Payment</h4>
+    <div id="card-element" class="form-group">
+       
+    </div>
+    <div id="card-errors" role="alert" style="color: red;"></div>
+</div>
+
+            <div class="text-center mt-4">
+                <%= f.submit "Place Order", class: 'btn btn-primary btn-lg rounded-pill' %>
+            </div>
+        <% end %>
+    </div>
+
+
+    <script src="https://js.stripe.com/v3/"></script>
+    <script>
+      document.addEventListener("DOMContentLoaded", function() {
+        var stripe = Stripe('pk_test_51P66VjSBINuBNg5tRulpGci113qdQRkOisw8aDnZI7CAa66Yw0QKKxqp9SU46ZLYYFSh5u2avLps9QHJQhJTV7Dh00BeNAEodP');
+        var elements = stripe.elements();
+        var style = {
+          base: {
+            color: '#32325d',
+            fontFamily: '"Helvetica Neue", Helvetica, sans-serif',
+            fontSmoothing: 'antialiased',
+            fontSize: '16px',
+            '::placeholder': {
+              color: '#aab7c4'
+            }
+          },
+          invalid: {
+            color: '#fa755a',
+            iconColor: '#fa755a'
+          }
+        };
+        var card = elements.create('card', {style: style});
+        card.mount('#card-element');
+    
+        // Handle real-time validation errors from the card Element.
+        card.on('change', function(event) {
+          var displayError = document.getElementById('card-errors');
+          if (event.error) {
+            displayError.textContent = event.error.message;
+          } else {
+            displayError.textContent = '';
+          }
+        });
+    
+     
+        var form = document.querySelector('form');
+        form.addEventListener('submit', function(event) {
+          event.preventDefault();
+    
+          stripe.createToken(card).then(function(result) {
+            if (result.error) {
+              // Inform the customer that there was an error and prevent form submission
+              var errorElement = document.getElementById('card-errors');
+              errorElement.textContent = result.error.message;
+            } else {
+              // If the token was created successfully, submit the form.
+              var form = document.querySelector('form');
+              var hiddenInput = document.createElement('input');
+              hiddenInput.setAttribute('type', 'hidden');
+              hiddenInput.setAttribute('name', 'stripeToken');
+              hiddenInput.setAttribute('value', result.token.id);
+              form.appendChild(hiddenInput);
+              form.submit();
+            }
+          });
+        });
+      });
+    </script>
+    

@@ -1,0 +1,12 @@
+<% @categories.each do |category| %>
+    <div class="col-md-12 mb-12">
+      <%= link_to category_path(category), class: "text-decoration-none category-card-link" do %>
+        <div class="category-card card h-100 shadow-sm">
+          <div class="card-body text-center">
+            <h5 class="card-title"><%= category.name %></h5>
+          </div>
+        </div>
+      <% end %>
+    </div>
+  <% end %>
+  

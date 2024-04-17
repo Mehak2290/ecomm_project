@@ -1,0 +1,50 @@
+<div class="container mt-5">
+    <h1 class="mb-4 text-center">Your Orders</h1>
+    <% if @orders.empty? %>
+        <div class="alert alert-info text-center" role="alert">
+            You have no orders yet. Start shopping now!
+        </div>
+    <% else %>
+        <div class="row row-cols-1 row-cols-md-2 g-4 justify-content-center">
+            <% @orders.each do |order| %>
+                <div class="col">
+                    <div >
+                        <div >
+                            Order #<%= order.id %>
+                        </div>
+                        <div class="card-body">
+                            <h5 class="card-title mb-3">Placed on <%= order.created_at.strftime("%B %d, %Y") %></h5>
+                            <h6 class="mb-4">Order Details:</h6>
+                            <% order.order_items.each do |item| %>
+                                <div class="d-flex justify-content-between align-items-center border-bottom mb-2 pb-2">
+                                    <div>
+                                        <span class="fw-bold"><%= item.product.name %></span> x <%= item.quantity %>
+                                    </div>
+                                    <div>
+                                        <%= number_to_currency(item.price) %>
+                                    </div>
+                                    <div>
+                                        <%= number_to_currency(item.quantity * item.price) %>
+                                    </div>
+                                </div>
+                            <% end %>
+                            <div class="taxes pt-2">
+                                <p>GST: <%= number_to_currency(order.gst) %></p>
+                                <p>PST: <%= number_to_currency(order.pst) %></p>
+                                <p>HST: <%= number_to_currency(order.hst) %></p>
+                            </div>
+                            <div class="delivery-address mt-3">
+                                <h6>Delivery Address:</h6>
+                                <p><%= order.address %></p>
+                                <p><%= order.province.name %></p>
+                            </div>
+                        </div>
+                        <div class="text-end">
+                            <h5 class="text-primary">Total: <%= number_to_currency(order.total) %></h5>
+                        </div>
+                    </div>
+                </div>
+            <% end %>
+        </div>
+    <% end %>
+</div>
