@@ -9,10 +9,10 @@ class Order < ApplicationRecord
       %w[id created_at updated_at total]
     end
 
-    def self.ransackable_associations(auth_object = nil)
+     def self.ransackable_associations(auth_object = nil)
   
-      %w[customer order_items  products province]
-    end
+       %w[customer order_items  products province]
+     end
   
   
     accepts_nested_attributes_for :order_items
